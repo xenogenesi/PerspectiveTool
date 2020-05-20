@@ -7,6 +7,8 @@
 
 #include "sizedialog.h"
 
+#include <QListWidget>
+
 namespace Ui {
 class MainWindow;
 }
@@ -21,10 +23,13 @@ public:
 
 private slots:
     void on_actionCopy_to_clipboard_triggered();
-
     void on_actionCopy_to_clipboard_with_size_triggered();
+    void on_actionExportSvg_triggered();
+
 private:
     Ui::MainWindow *ui;
+
+    void createDockWindows();
 
 public slots:
 };

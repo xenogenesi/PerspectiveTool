@@ -5,6 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += uitools
+QT       += svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,15 +26,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
+    collapsiblepanel.cpp \
 mainwindow.cpp \
 perspectiveeditor.cpp \
     perspectivepoint.cpp \
+    propcanvas.cpp \
+    propertystack.cpp \
+    proppoint.cpp \
     sizedialog.cpp
 
 HEADERS  += mainwindow.h \
+    collapsiblepanel.h \
 perspectiveeditor.h \
     perspectivepoint.h \
+    propcanvas.h \
+    propertystack.h \
+    proppoint.h \
     sizedialog.h
 
 FORMS    += mainwindow.ui \
+    propcanvas.ui \
+    proppoint.ui \
     sizedialog.ui

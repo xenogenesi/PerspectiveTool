@@ -1,7 +1,8 @@
 #include "perspectivepoint.h"
 
-PerspectivePoint::PerspectivePoint() {
-
+PerspectivePoint::PerspectivePoint(QObject *parent) :
+    QObject(parent)
+{
 }
 
 bool PerspectivePoint::inHelperArea(QPointF point) {
@@ -25,4 +26,24 @@ void PerspectivePoint::subtractLine() {
     if(number_of_lines < 0)
         number_of_lines = 0;
 
+}
+
+void PerspectivePoint::move(const QPointF &to)
+{
+    bool didMove = false;
+
+    if (to.x() != position.x()) {
+        position.setX(to.x());
+        didMove = true;
+    }
+
+    if (to.y() != position.y()) {
+        position.setY(to.y());
+        didMove = true;
+    }
+
+    if (didMove) {
+        emit moved(to);
+        emit update();
+    }
 }

@@ -1,6 +1,7 @@
 #ifndef PERSPECTIVEPOINT_H
 #define PERSPECTIVEPOINT_H
 
+#include <QObject>
 #include <QPointF>
 #include <QVector>
 #include <QLineF>
@@ -8,10 +9,12 @@
 #include <QRectF>
 #include <QDebug>
 
-class PerspectivePoint
+class PerspectivePoint : public QObject
 {
+    Q_OBJECT
+
 public:
-    PerspectivePoint();
+    PerspectivePoint(QObject *parent = nullptr);
     QPointF position;
     QVector<QLineF> lines;
     QColor line_color;
@@ -29,6 +32,13 @@ public:
 
     void addLine();
     void subtractLine();
+
+signals:
+    void moved(const QPointF &to);
+    void update();
+
+public slots:
+    void move(const QPointF &to);
 };
 
 #endif // PERSPECTIVEPOINT_H

@@ -20,6 +20,7 @@ class PerspectiveEditor : public QWidget
     Q_OBJECT
 public:
     explicit PerspectiveEditor(QWidget *parent = 0);
+    ~PerspectiveEditor();
 
     bool camera_drag_mode = false;
     bool camera_dragging = false;
@@ -31,11 +32,11 @@ public:
     float zoom_level = 1;
     float zoom_level_change = 0.25;
 
-    QVector<PerspectivePoint> perspective_points;
+    QVector<PerspectivePoint *> perspective_points;
 
     QPointF camera_position = QPointF(100, 100);
 
-    QRectF canvas = QRectF(0, 0, 1280, 800);
+    QRectF m_canvas = QRectF(0, 0, 1000, 1500);
 
     QLineF camera_drag_line;
 
@@ -45,13 +46,16 @@ public:
 
     bool antialiasing = false;
 
+    void paintScene(QPainter &painter, const QRectF &canvas);
+    void paintImage(QPainter &painter, const QRectF &canvas, int width, int height, bool isScreen = true);
+
     void selectPerspectivePoint(int p);
 
     QPointF convertToViewerCoords(QPointF point);
     QPointF convertToRealCoords(QPointF point);
     QPointF convertToRealCoords(QPointF point, QPointF offset);
     QPointF convertToViewerCoords(QPointF point, QPointF offset);
-    QImage renderImage(int width, int height);
+    QImage renderImage(const QRectF &canvas, int width, int height);
 
     QImage scaled_image;
 
@@ -67,15 +71,18 @@ public:
     QPointF getCurrentOffset();
     void raiseZoomLevel();
     void decreaseZoomLevel();
-    void reRenderCanvasImage();
 public slots:
+    void reRenderCanvasImage();
     void perspectivePointsSelected (int perspective);
     void setAntialiasing(bool antialiasing);
     void setCurrentOpacity(int opacity);
     void setCurrentLines(int lines);
     void setCurrentCenterRemoval(int center_removal);
+    void pointMove(int index, const QPointF &to);
+    void resizeCanvas(const QSizeF &size);
 
 signals:
+    void pointMoved(int index, const QPointF &to);
     void setOpacity(int opacity);
     void setLines (int lines);
     void setCenterRemoval (int center_removal);
