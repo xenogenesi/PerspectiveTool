@@ -50,7 +50,7 @@ void PropPoint::moved(int index, const QPointF &to)
     if (index != m_index)
         return;
 
-    qDebug() << "moved: " << index << " - " << to;
+//    qDebug() << "moved: " << index << " - " << to;
 
     double x = to.x(), y = to.y();
     if (x != ui->posX->value())
@@ -67,7 +67,7 @@ void PropPoint::changed(double ignored)
     pos.setX(ui->posX->value());
     pos.setY(ui->posY->value());
 
-    qDebug() << "value changed: " << m_index << " - " << pos;
+//    qDebug() << "value changed: " << m_index << " - " << pos;
 //    emit move(m_index, pos);
     emit move(pos);
 }

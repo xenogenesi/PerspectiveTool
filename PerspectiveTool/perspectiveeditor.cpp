@@ -76,7 +76,7 @@ void PerspectiveEditor::setCurrentCenterRemoval(int center_removal) {
 
 void PerspectiveEditor::pointMove(int index, const QPointF &to)
 {
-    qDebug() << "pointMove: " << index << " - " << to;
+//    qDebug() << "pointMove: " << index << " - " << to;
     perspective_points[index]->position = to;
     reRenderCanvasImage();
 }
@@ -190,7 +190,7 @@ void PerspectiveEditor::mouseMoveEvent(QMouseEvent *event) {
         update(); //repaint();
     } else if(perspective_point_move != -1) {
 //        perspective_points[perspective_point_move].position = mouse;
-        qDebug() << "emit pointMoved: " << perspective_point_move << " - " << mouse;
+//        qDebug() << "emit pointMoved: " << perspective_point_move << " - " << mouse;
         pointMove(perspective_point_move, mouse);
         emit pointMoved(perspective_point_move, mouse);
     }
@@ -313,13 +313,16 @@ void PerspectiveEditor::paintImage(QPainter &painter, const QRectF &canvas, int 
                     if (line.intersect(top, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP2(intersect);
                         painter.drawLine(new_line);
-                    } else if (line.intersect(left, &intersect) == QLineF::BoundedIntersection) {
+                    }
+                    if (line.intersect(left, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP2(intersect);
                         painter.drawLine(new_line);
-                    } else if (line.intersect(bottom, &intersect) == QLineF::BoundedIntersection) {
+                    }
+                    if (line.intersect(bottom, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP2(intersect);
                         painter.drawLine(new_line);
-                    } else if (line.intersect(right, &intersect) == QLineF::BoundedIntersection) {
+                    }
+                    if (line.intersect(right, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP2(intersect);
                         painter.drawLine(new_line);
                     }
@@ -328,13 +331,16 @@ void PerspectiveEditor::paintImage(QPainter &painter, const QRectF &canvas, int 
                     if (line.intersect(top, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP1(intersect);
                         painter.drawLine(new_line);
-                    } else if (line.intersect(left, &intersect) == QLineF::BoundedIntersection) {
+                    }
+                    if (line.intersect(left, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP1(intersect);
                         painter.drawLine(new_line);
-                    } else if (line.intersect(bottom, &intersect) == QLineF::BoundedIntersection) {
+                    }
+                    if (line.intersect(bottom, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP1(intersect);
                         painter.drawLine(new_line);
-                    } else if (line.intersect(right, &intersect) == QLineF::BoundedIntersection) {
+                    }
+                    if (line.intersect(right, &intersect) == QLineF::BoundedIntersection) {
                         new_line.setP1(intersect);
                         painter.drawLine(new_line);
                     }
@@ -346,6 +352,10 @@ void PerspectiveEditor::paintImage(QPainter &painter, const QRectF &canvas, int 
                     tLeft = line.intersect(left, &xLeft);
                     tBottom = line.intersect(bottom, &xBottom);
                     tRight = line.intersect(right, &xRight);
+
+//                    qDebug() << "line[" << l << "]: ";
+//                    qDebug() << "tTop: " << tTop << " - tLeft: " << tLeft << " - tBottom: " << tBottom << " - tRight: " << tRight;
+//                    qDebug() << "xTop: " << xTop << " - xLeft: " << xLeft << " - xBottom: " << xBottom << " - xRight: " << xRight;
 
                     // remove eventual double intersections at the corners
                     if (tTop == QLineF::BoundedIntersection && tRight == QLineF::BoundedIntersection) {
@@ -371,15 +381,18 @@ void PerspectiveEditor::paintImage(QPainter &painter, const QRectF &canvas, int 
                         new_line.setP1(xTop);
                         tTop = QLineF::NoIntersection; // avoid to reuse it for P2
                         foundP1 = true;
-                    } else if (foundP1 != true && tRight == QLineF::BoundedIntersection) {
+                    }
+                    if (foundP1 != true && tRight == QLineF::BoundedIntersection) {
                         new_line.setP1(xRight);
                         tRight = QLineF::NoIntersection;
                         foundP1 = true;
-                    } else if (foundP1 != true && tLeft == QLineF::BoundedIntersection) {
+                    }
+                    if (foundP1 != true && tLeft == QLineF::BoundedIntersection) {
                         new_line.setP1(xLeft);
                         tLeft = QLineF::NoIntersection;
                         foundP1 = true;
-                    } else if (foundP1 != true && tBottom == QLineF::BoundedIntersection) {
+                    }
+                    if (foundP1 != true && tBottom == QLineF::BoundedIntersection) {
                         new_line.setP1(xBottom);
                         tBottom = QLineF::NoIntersection;
                         foundP1 = true;
@@ -388,15 +401,22 @@ void PerspectiveEditor::paintImage(QPainter &painter, const QRectF &canvas, int 
                     if (foundP2 != true && tTop == QLineF::BoundedIntersection) {
                         new_line.setP2(xTop);
                         foundP2 = true;
-                    } else if (foundP2 != true && tRight == QLineF::BoundedIntersection) {
+                    }
+                    if (foundP2 != true && tRight == QLineF::BoundedIntersection) {
                         new_line.setP2(xRight);
                         foundP2 = true;
-                    } else if (foundP2 != true && tLeft == QLineF::BoundedIntersection) {
+                    }
+                    if (foundP2 != true && tLeft == QLineF::BoundedIntersection) {
                         new_line.setP2(xLeft);
                         foundP2 = true;
-                    } else if (foundP2 != true && tBottom == QLineF::BoundedIntersection) {
+                    }
+                    if (foundP2 != true && tBottom == QLineF::BoundedIntersection) {
                         new_line.setP2(xBottom);
                         foundP2 = true;
+                    }
+
+                    if (new_line.p1() == new_line.p2()) {
+                        qDebug() << "p1 == p2" << new_line.p1();
                     }
 
                     if (foundP1 == true && foundP2 == true)
